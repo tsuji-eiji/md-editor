@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EasyMDE demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js"></script>
+</head>
+
+<body>
+  <textarea id="my-text-area"></textarea>
+  <script>
+    const easymde = new EasyMDE({
+      element: document.getElementById('my-text-area'),
+      toolbar: [
+        "bold",
+        "heading",
+        "strikethrough",
+        "|",
+        {
+          name: "emdet-insertYoutube",
+          action: insertYoutube,           //Javascriptの関数を呼び出す
+          className: "fa fa-youtube-play", //fontawesome(4.7.0)より選択
+          title: "Insert Youtube Video"
+        },
+        "side-by-side"
+      ]
+    });
+
+    var _editor = {};
+
+    function insertYoutube(editor) {
+      _editor = editor;
+      var id = prompt("動画のIDを入力してください。", "");
+
+      if (id !== null && id !== "") {
+        var tag = '<div class="youtube-container"><iframe width="560" height="315" src="https://www.youtube.com/embed/' + id + '" frameborder="0" allowfullscreen></iframe></div>';
+        var cm = _editor.codemirror;
+        cm.replaceSelection(tag);
+      }
+    }
+  </script>
+</body>
+
+</html>
